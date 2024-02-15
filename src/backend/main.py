@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+
 from . import model
+
 
 class Data(BaseModel):
     pregnancies: int
@@ -14,6 +16,6 @@ class Data(BaseModel):
 
 app = FastAPI()
 
-@app.get("/predict")
+@app.post("/predict")
 async def predict(data: Data):
     return int(model.predict_diabetes(**data.model_dump())[0])
