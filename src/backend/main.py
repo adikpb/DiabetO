@@ -2,19 +2,21 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import flet_fastapi
 
-from . import model
+from . import model2
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 
+
 class Data(BaseModel):
-    pregnancies: int
-    glucose: float
-    bloodpressure: float
-    skinthickness: float
-    insulin: float
+    gender: int
+    age: float
+    hypertension: int
+    heart_diseases: int
+    smoking_history: int
     bmi: float
-    diabetespedigreefunction: float
-    age: int
+    HbA1c_level: float
+    blood_glucose_level: float
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -35,4 +37,4 @@ app.add_middleware(
 
 @app.post("/predict")
 async def predict(data: Data):
-    return {"outcome": bool(model.predict_diabetes(**data.model_dump())[0])}
+    return {"outcome": bool(model2.predict_diabetes(**data.model_dump())[0])}
