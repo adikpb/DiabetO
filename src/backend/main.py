@@ -15,7 +15,6 @@ class Data(BaseModel):
     age: int
 
 app = FastAPI()
-
 @app.post("/predict")
 async def predict(data: Data):
-    return {"outcome": bool(model.predict_diabetes(**data.model_dump())[0])}
+    return bool(model.predict_diabetes(**data.model_dump())[0])
