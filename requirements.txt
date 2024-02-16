@@ -6,3 +6,4 @@ fastapi
 flet-fastapi
 uvicorn
 requests
+aiohttp[speedups]
