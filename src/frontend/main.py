@@ -15,7 +15,7 @@ class MainView(ft.View):
         self.session = aiohttp.ClientSession()
         self.dlg = ft.AlertDialog(title=ft.Text("HI"))
 
-        self.gender = ft.Row(
+        self.gender = ft.Column(
             [
                 ft.Text("Gender"),
                 ft.SegmentedButton(
@@ -29,6 +29,7 @@ class MainView(ft.View):
                 ),
             ],
             expand=True,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         )
         self.age = ft.Row([ft.TextField(label="Age", expand=True)], expand=True)
         self.hypertension = ft.Row(
@@ -41,7 +42,7 @@ class MainView(ft.View):
             expand=True,
             alignment=ft.MainAxisAlignment.CENTER,
         )
-        self.smoking_history = ft.Row(
+        self.smoking_history = ft.Column(
             [
                 ft.Text("Smoking History"),
                 ft.SegmentedButton(
@@ -55,6 +56,7 @@ class MainView(ft.View):
                     expand=True,
                 ),
             ],
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             expand=True,
         )
         self.bmi = ft.Row([ft.TextField(label="BMI", expand=True)], expand=True)
@@ -90,9 +92,7 @@ class MainView(ft.View):
                     + [
                         ft.Row(
                             controls=[
-                                ft.Row(expand=True),
                                 i,
-                                ft.Row(expand=True),
                             ],
                             expand=True,
                             alignment=ft.MainAxisAlignment.CENTER,
@@ -105,10 +105,8 @@ class MainView(ft.View):
                     + [
                         ft.Row(
                             controls=[
-                                ft.Row(expand=True),
                                 self.hypertension,
                                 self.heart_disease,
-                                ft.Row(expand=True),
                             ],
                             expand=True,
                             alignment=ft.MainAxisAlignment.CENTER,
@@ -117,9 +115,7 @@ class MainView(ft.View):
                     + [
                         ft.Row(
                             controls=[
-                                ft.Row(expand=True),
                                 i,
-                                ft.Row(expand=True),
                             ],
                             expand=True,
                             alignment=ft.MainAxisAlignment.CENTER,
@@ -134,15 +130,15 @@ class MainView(ft.View):
                     + [
                         ft.Row(
                             controls=[
-                                ft.Row(expand=True),
+                                ft.Row(expand=1),
                                 ft.ElevatedButton(
                                     "Check!",
+                                    expand=2,
                                     icon=ft.icons.CHECK,
                                     icon_color="green",
-                                    expand=True,
                                     on_click=self.post_req,
                                 ),
-                                ft.Row(expand=True),
+                                ft.Row(expand=1),
                             ],
                             expand=True,
                             alignment=ft.MainAxisAlignment.CENTER,
@@ -152,11 +148,12 @@ class MainView(ft.View):
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     alignment=ft.MainAxisAlignment.CENTER,
                 ),
+                alignment=ft.alignment.center,
                 border_radius=50,
                 bgcolor=ft.colors.TERTIARY_CONTAINER,
                 expand=True,
-                margin=50,
-                alignment=ft.alignment.center,
+                margin=5,
+                padding=ft.Padding(left=25, top=5, right=25, bottom=5),
             )
         ]
 
