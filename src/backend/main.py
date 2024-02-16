@@ -1,10 +1,11 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from contextlib import asynccontextmanager
+
 import flet_fastapi
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 from . import model2
-from contextlib import asynccontextmanager
-from fastapi.middleware.cors import CORSMiddleware
 
 
 class Data(BaseModel):

@@ -15,7 +15,7 @@ scikit-learn = "^1.4.0"
 fastapi = "<0.102.0"
 uvicorn = "^0.27.1"
 flet-fastapi = "^0.20.0"
-requests = "^2.31.0"
+aiohttp = {extras = ["speedups"], version = "^3.9.3"}
 
 
 [tool.poetry.group.dev.dependencies]

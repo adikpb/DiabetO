@@ -1,6 +1,6 @@
+import aiohttp
 import flet as ft
 import flet_fastapi
-import requests
 
 from ..backend.main import *
 
@@ -9,9 +9,12 @@ class MainView(ft.View):
     def __init__(self, page: ft.Page):
         super().__init__()
         self.page = page
-        self.dlg = ft.AlertDialog(title=ft.Text("HI"))
         self.vertical_alignment = ft.MainAxisAlignment.CENTER
         self.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+
+        self.session = aiohttp.ClientSession()
+        self.dlg = ft.AlertDialog(title=ft.Text("HI"))
+
         self.gender = ft.Row(
             [
                 ft.Text("Gender"),
@@ -174,9 +177,28 @@ class MainView(ft.View):
             "blood_glucose_level": int(self.blood_glucose_level.controls[0].value),
         }
         print(json)
-        response = requests.post("https://diabeto.onrender.com/predict", json=json)
-        print(response.json()["outcome"])
-        self.dlg = ft.AlertDialog(title=ft.Text(value=f'You {"Have" if response.json()["outcome"] else "Don't Have"} Diabetes!'))
+        self.page.overlay.append(
+            ft.Container(
+                content=ft.ProgressRing(),
+                expand=True,
+                alignment=ft.alignment.center,
+                bgcolor=ft.colors.BLACK,
+                opacity=0.60,
+            )
+        )
+        await self.page.update_async()
+        async with self.session.post(
+            "https://diabeto.onrender.com/predict", json=json
+        ) as response:
+            response = await response.json()
+            if response["outcome"]:
+                self.dlg = ft.AlertDialog(title=ft.Text(value="You Have Diabetes!"))
+            else:
+                self.dlg = ft.AlertDialog(
+                    title=ft.Text(value="You Don't Have Diabetes!")
+                )
+        self.page.overlay.pop()
+        await self.page.update_async()
         await self.open_dialog()
 
 
