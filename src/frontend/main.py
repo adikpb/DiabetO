@@ -188,7 +188,7 @@ class MainView(ft.View):
         )
         await self.page.update_async()
         async with self.session.post(
-            "https://diabeto.onrender.com/predict", json=json
+            "http://127.0.0.1:8000/predict", json=json
         ) as response:
             response = await response.json()
             if response["outcome"]:
