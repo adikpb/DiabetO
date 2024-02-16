@@ -12,6 +12,63 @@ class MainView(ft.View):
         self.dlg = ft.AlertDialog(title=ft.Text("HI"))
         self.vertical_alignment = ft.MainAxisAlignment.CENTER
         self.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+        self.gender = ft.Row(
+            [
+                ft.Text("Gender"),
+                ft.SegmentedButton(
+                    segments=[
+                        ft.Segment(value="1", label=ft.Text("Male")),
+                        ft.Segment(value="2", label=ft.Text("Female")),
+                        ft.Segment(value="0", label=ft.Text("Rather Not Say")),
+                    ],
+                    allow_empty_selection=True,
+                    expand=True,
+                ),
+            ],
+            expand=True,
+        )
+        self.age = ft.Row([ft.TextField(label="Age", expand=True)], expand=True)
+        self.hypertension = ft.Row(
+            [ft.Switch(label="Hypertension", label_position=ft.LabelPosition.LEFT)],
+            expand=True,
+            alignment=ft.MainAxisAlignment.CENTER,
+        )
+        self.heart_disease = ft.Row(
+            [ft.Switch(label="Heart Disease", label_position=ft.LabelPosition.LEFT)],
+            expand=True,
+            alignment=ft.MainAxisAlignment.CENTER,
+        )
+        self.smoking_history = ft.Row(
+            [
+                ft.Text("Smoking History"),
+                ft.SegmentedButton(
+                    segments=[
+                        ft.Segment(value="0", label=ft.Text("Never")),
+                        ft.Segment(value="1", label=ft.Text("Current")),
+                        ft.Segment(value="2", label=ft.Text("Former")),
+                        ft.Segment(value="3", label=ft.Text("No Info")),
+                    ],
+                    allow_empty_selection=True,
+                    expand=True,
+                ),
+            ],
+            expand=True,
+        )
+        self.bmi = ft.Row([ft.TextField(label="BMI", expand=True)], expand=True)
+        self.HbA1c_level = ft.Row(
+            [ft.TextField(label="HbA1c Level", expand=True)], expand=True
+        )
+        self.blood_glucose_level = ft.Row(
+            [
+                ft.TextField(
+                    label="Blood Glucose Level",
+                    input_filter=ft.NumbersOnlyInputFilter(),
+                    expand=True,
+                )
+            ],
+            expand=True,
+        )
+
         self.controls = [
             ft.Container(
                 content=ft.Column(
@@ -21,22 +78,58 @@ class MainView(ft.View):
                                 ft.Text(
                                     "DiabetO",
                                     theme_style=ft.TextThemeStyle.DISPLAY_MEDIUM,
-                                    
                                 )
                             ],
                             expand=True,
                             alignment=ft.MainAxisAlignment.CENTER,
-                        ),]+
-                        [ft.Row(
+                        ),
+                    ]
+                    + [
+                        ft.Row(
                             controls=[
                                 ft.Row(expand=True),
-                                ft.TextField(label=i, expand=True),
+                                i,
                                 ft.Row(expand=True),
                             ],
                             expand=True,
                             alignment=ft.MainAxisAlignment.CENTER,
-                        ) for i in ("Age", "Hypertension", "Heart Disease",	"Smoking History", "BMI", "HbA1c Level", "Blood Glucose Level")]+
-                        [ft.Row(
+                        )
+                        for i in (
+                            self.gender,
+                            self.age,
+                        )
+                    ]
+                    + [
+                        ft.Row(
+                            controls=[
+                                ft.Row(expand=True),
+                                self.hypertension,
+                                self.heart_disease,
+                                ft.Row(expand=True),
+                            ],
+                            expand=True,
+                            alignment=ft.MainAxisAlignment.CENTER,
+                        )
+                    ]
+                    + [
+                        ft.Row(
+                            controls=[
+                                ft.Row(expand=True),
+                                i,
+                                ft.Row(expand=True),
+                            ],
+                            expand=True,
+                            alignment=ft.MainAxisAlignment.CENTER,
+                        )
+                        for i in (
+                            self.smoking_history,
+                            self.bmi,
+                            self.HbA1c_level,
+                            self.blood_glucose_level,
+                        )
+                    ]
+                    + [
+                        ft.Row(
                             controls=[
                                 ft.Row(expand=True),
                                 ft.ElevatedButton(
@@ -71,21 +164,17 @@ class MainView(ft.View):
 
     async def post_req(self, e=None):
         json = {
-            "gender": int(self.controls[0].content.controls[1].controls[1].value),
-            "age": float(self.controls[0].content.controls[2].controls[1].value),
-            "hypertension": int(self.controls[0].content.controls[3].controls[1].value),
-            "heart_diseases": int(self.controls[0].content.controls[4].controls[1].value),
-            "smoking_history": int(self.controls[0].content.controls[5].controls[1].value),
-            "bmi": float(self.controls[0].content.controls[6].controls[1].value),
-            "HbA1c_level": float(self.controls[0].content.controls[7].controls[1].value),
-            "blood_glucose_level": int(self.controls[0].content.controls[8].controls[1].value),
+            "gender": int(list(self.gender.controls[1].selected)[0]),
+            "age": float(self.age.controls[0].value),
+            "hypertension": int(self.hypertension.controls[0].value),
+            "heart_diseases": int(self.heart_disease.controls[0].value),
+            "smoking_history": int(list(self.smoking_history.controls[1].selected)[0]),
+            "bmi": float(self.bmi.controls[0].value),
+            "HbA1c_level": float(self.HbA1c_level.controls[0].value),
+            "blood_glucose_level": int(self.blood_glucose_level.controls[0].value),
         }
-        while True:
-            try:
-                response = requests.post("https://diabeto.onrender.com/predict", json=json)
-                break
-            except:
-                pass
+        print(json)
+        response = requests.post("https://diabeto.onrender.com/predict", json=json)
         print(response.json()["outcome"])
         self.dlg = ft.AlertDialog(title=ft.Text(value=f'You {"Have" if response.json()["outcome"] else "Don't Have"} Diabetes!'))
         await self.open_dialog()
