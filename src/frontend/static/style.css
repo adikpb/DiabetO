@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+/* navbar */
+
+.navbar {
+    background-color: #ffffff;
+    color: #3464d3 !important;
+}
+
+.navbar-brand {
+    color: #3464d3 !important;
+    padding-left: 100px;
+    font-weight: bold;
+    font-size: 27px;
+}
+
+#navbar button {
+    color: white !important;
+}
+
+/* banner */
+
+#banner-container {
+    background-color: #3464d3;
+    color: white !important;
+    padding-top: 10px;
+    padding-bottom: 20px;
+
+}
+
+#banner-row h3,
+p {
+    padding-left: 20px;
+    padding-top: 20px;
+    text-align: center;
+}
+
+/* form details */
+
+#banner-col {
+    padding-left: 20px;
+}
+
+#about-col {
+    padding-left: 5%;
+}
+
+#form-margin {
+    padding-left: 5%;
+}
+
+#gender {
+    padding-left: 5%;
+}
+
+#hypertension {
+    padding-left: 5%;
+}
+
+#smoking_history {
+    padding-left: 5%;
+}
+
+#heart_diseases {
+    padding-left: 5%;
+}
+
+#submit-button {
+    color: azure;
+}
+
+#submit-button-main {
+    padding-left: 40%;
+}
+
+/* about */
+
+#about {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+/* footer */
+
+.mb-3 {
+    padding-top: 10px;
+}
