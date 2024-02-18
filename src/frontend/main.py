@@ -2,7 +2,10 @@ import aiohttp
 import flet as ft
 import flet_fastapi
 
+from fastapi.staticfiles import StaticFiles
 from ..backend.main import *
+
+from pathlib import Path
 
 
 class MainView(ft.View):
@@ -204,4 +207,5 @@ async def main(page: ft.Page):
     await page.update_async()
 
 
-app.mount("/flet-app", flet_fastapi.app(main))
+app.mount("/static", StaticFiles(directory=Path.joinpath(Path(__file__).parent.absolute(), Path("static")), html = True), name="static")
+app.mount("/flet", flet_fastapi.app(main), name="flet")

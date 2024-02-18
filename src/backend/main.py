@@ -21,9 +21,11 @@ class Data(BaseModel):
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    print(app.__class__)
     await flet_fastapi.app_manager.start()
     yield
     await flet_fastapi.app_manager.shutdown()
+
 
 app = FastAPI(lifespan=lifespan)
 
@@ -35,7 +37,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+api = FastAPI()
 
-@app.post("/predict")
+
+@api.post("/")
 async def predict(data: Data):
     return {"outcome": bool(model2.predict_diabetes(**data.model_dump())[0])}
+
+
+app.mount("/predict", api)
