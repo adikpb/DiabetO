@@ -57,7 +57,7 @@ Our model stands out by utilizing a well-established machine learning algorithm 
 2. Install the required dependencies.
 3. Run the application and input the necessary health attributes.
 4. Receive quick and accurate predictions regarding the likelihood of diabetes.
-5. Or... [diabeto.onrender.com/static](diabeto.onrender.com/static) [diabeto.onrender.com/flet](diabeto.onrender.com/static)
+5. Or... [diabeto.onrender.com/static](https://diabeto.onrender.com/static) [diabeto.onrender.com/flet](https://diabeto.onrender.com/static)
 
 ## License <a name= "license"></a>
 
