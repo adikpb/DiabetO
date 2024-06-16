@@ -1,6 +1,6 @@
 import aiohttp
 import flet as ft
-import flet_fastapi
+import flet.fastapi as flet_fastapi
 
 from fastapi.staticfiles import StaticFiles
 from ..backend.main import *

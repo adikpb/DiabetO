@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 
-import flet_fastapi
+import flet.fastapi as flet_fastapi
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
