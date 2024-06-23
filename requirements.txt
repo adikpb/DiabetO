@@ -1,9 +1,7 @@
-fastapi
 numpy
 pandas
 scikit-learn
-fastapi
-flet-fastapi
+flet
 uvicorn
 requests
 aiohttp[speedups]
