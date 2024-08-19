@@ -163,7 +163,7 @@ class MainView(ft.View):
     async def open_dialog(self, e=None):
         self.page.dialog = self.dlg
         self.dlg.open = True
-        await self.page.update_async()
+        self.page.update()
 
     async def post_req(self, e=None):
         json = {
@@ -186,7 +186,7 @@ class MainView(ft.View):
                 opacity=0.60,
             )
         )
-        await self.page.update_async()
+        self.page.update()
         async with self.session.post(
             "http://127.0.0.1:8000/predict", json=json
         ) as response:
@@ -198,14 +198,21 @@ class MainView(ft.View):
                     title=ft.Text(value="You Don't Have Diabetes!")
                 )
         self.page.overlay.pop()
-        await self.page.update_async()
-        await self.open_dialog()
+        self.page.update()
+        self.open_dialog()
 
 
 async def main(page: ft.Page):
     page.views[0] = MainView(page)
-    await page.update_async()
+    page.update()
 
 
-app.mount("/static", StaticFiles(directory=Path.joinpath(Path(__file__).parent.absolute(), Path("static")), html = True), name="static")
+app.mount(
+    "/static",
+    StaticFiles(
+        directory=Path.joinpath(Path(__file__).parent.absolute(), Path("static")),
+        html=True,
+    ),
+    name="static",
+)
 app.mount("/flet", flet_fastapi.app(main), name="flet")
