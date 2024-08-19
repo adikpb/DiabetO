@@ -160,7 +160,7 @@ class MainView(ft.View):
             )
         ]
 
-    async def open_dialog(self, e=None):
+    def open_dialog(self, e=None):
         self.page.dialog = self.dlg
         self.dlg.open = True
         self.page.update()
